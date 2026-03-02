@@ -23,8 +23,9 @@ jobs:
         run: npm ci
 
       - name: Build React App
-        run: npm run build
+        run:  npm run build
         env:
+            CI: false
             REACT_APP_API_URL: ${{ vars.REACT_APP_PROD_API_URL }}
 
       - name: Configure AWS Credentials
