@@ -1,4 +1,4 @@
-name: todo_fe app
+name: mytodo_fe app
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
         run:  npm run build
         env:
             CI: false
-            REACT_APP_API_URL: ${{ vars.REACT_APP_PROD_API_URL }}
+            REACT_APP_API_URL: ${{ vars.PROD_REACT_APP_API_URL }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
