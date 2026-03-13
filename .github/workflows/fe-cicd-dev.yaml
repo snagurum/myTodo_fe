@@ -1,7 +1,10 @@
-name: mytodo_fe prod
+name: mytodo_fe dev
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
   id-token: write
@@ -11,10 +14,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      TARGET_REGION: ${{ vars.PROD_AWS_REGION || vars.AWS_REGION }}
-      TARGET_S3_BUCKET_NAME: ${{ vars.PROD_S3_BUCKET_NAME || vars.S3_BUCKET_NAME }}
-      TARGET_CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID || vars.CLOUDFRONT_DISTRIBUTION_ID }}
-      TARGET_REACT_APP_API_URL: ${{ vars.PROD_REACT_APP_API_URL || vars.REACT_APP_API_URL }}
+      TARGET_REGION: ${{ vars.DEV_AWS_REGION || vars.AWS_REGION }}
+      TARGET_S3_BUCKET_NAME: ${{ vars.DEV_S3_BUCKET_NAME || vars.S3_BUCKET_NAME }}
+      TARGET_CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.DEV_CLOUDFRONT_DISTRIBUTION_ID || vars.CLOUDFRONT_DISTRIBUTION_ID }}
+      TARGET_REACT_APP_API_URL: ${{ vars.DEV_REACT_APP_API_URL || vars.REACT_APP_API_URL }}
 
     steps:
       - name: Checkout Source
@@ -37,7 +40,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.PROD_mytodo_cicd_role_arn }}
+          role-to-assume: ${{ vars.DEV_mytodo_cicd_role_arn }}
           aws-region: ${{ env.TARGET_REGION }}
 
       - name: Upload to S3
